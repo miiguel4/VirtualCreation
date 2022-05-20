@@ -3,3 +3,34 @@
     height: 100vh !important;
     }
     }
+
+body {
+        background: linear-gradient(to bottom, #FFC107, #ffffff);
+        color: #454749;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Source Sans Pro', sans-serif;
+        min-height: 100vh;
+    }
+
+#borde {
+    box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 20%), 0 0.25rem 0.25rem rgb(0 0 0 / 20%);
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #06a5a0;
+    border-color: #06a5a0;
+}
+#volver {
+    margin-right: 330px;
+}
+
+input#registration_form_plainPassword.form-control.form-control-user {
+	width: 210%;
+}
+
+input#registration_form_agreeTerms.form-check-label{
+    margin: 5px;
+}

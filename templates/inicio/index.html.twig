@@ -50,6 +50,11 @@
           <input type="search" class="form-control" placeholder="Buscar recursos, servicios..." aria-label="Search" style="width : 450px" >
         </form>
         <div class="text-end">
+          {% if error is defined %}
+            {% if error %}
+              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+          {% endif %}
           {% if app.user %}
               <div class="mb-3">
                 {# Has iniciado sesión como {{ app.user.userIdentifier }},  #}
@@ -57,8 +62,8 @@
               </div>
           {% else %}
               <a class="btn btn-light text-dark me-2 border border-dark" href="{{ path('app_login') }}" role="button">Iniciar Sesión</a>
-              {# <a class="btn btn-warning" href="{{ path('app_register') }}" role="button">Regístrate</a> #}
-              <a class="btn btn-warning" href="#" role="button">Regístrate</a>
+              <a class="btn btn-warning" href="{{ path('app_register') }}" role="button">Regístrate</a>
+           {#    <a class="btn btn-warning" href="#" role="button">Regístrate</a> #}
           {% endif %}
           
         </div>

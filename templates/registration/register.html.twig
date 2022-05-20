@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('assets/css/registrarse.css') }}">
+     <section class="h-100 h-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3" id="borde">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Información de Registro</h3>
+                            {# <form method="post">
+                                <input type="text" name"email">
+                                <button class="btn btn-primary" type="submit">Registrarse</button>
+                            </form> #}
+                            {{ form_start(registrationForm) }}
+                                <div class="form-outline mb-4">
+                                    {{ form_row(registrationForm.email, {
+                                            'attr': {
+                                                'class': 'form-control form-control-user',
+                                                'placeholder': 'Introduce su correo electrónico...'
+                                                }
+                                            })
+                                    }}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline datepicker">
+                                            {{ form_row(registrationForm.plainPassword, {
+                                                label: 'Contraseña',
+                                                'attr': {
+                                                    'class': 'form-control form-control-user',
+                                                    'placeholder': 'Introduce su contraseña...'
+                                                }
+                                                }) 
+                                            }}
+                                        </div>
+                                        <div class="form-check">
+                                            {{ form_row(registrationForm.agreeTerms, {
+                                                'attr': {
+                                                        'class': "form-check-input",
+                                                        'class': "form-check-label"
+                                                    },
+                                                label: 'Aceptar Condiciones',
+                                                'attr': {
+                                                        'class':"form-check-label"
+                                                    }
+                                                })
+                                            
+                                            }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <a id="volver" class="btn btn-primary" href="{{ path('app_inicio') }}" role="button">Volver</a>
+                                <button class="btn btn-primary" type="submit">Registrarse</button>
+                            {{ form_end(registrationForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
