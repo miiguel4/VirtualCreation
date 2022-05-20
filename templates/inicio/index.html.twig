@@ -53,13 +53,11 @@
           {% if app.user %}
               <div class="mb-3">
                 {# Has iniciado sesión como {{ app.user.userIdentifier }},  #}
-                {# <a class="btn btn-warning" href="{{ path('app_logout') }}" role="button">Cerrar sesión</a> #}
-                <a class="btn btn-warning" href="#" role="button">Cerrar sesión</a>
+                <a class="btn btn-warning" href="{{ path('app_logout') }}" role="button">Cerrar sesión</a>
               </div>
           {% else %}
-              {# <a class="btn btn-light text-dark me-2 border border-dark" href="{{ path('app_login') }}" role="button">Iniciar Sesión</a>
-              <a class="btn btn-warning" href="{{ path('app_register') }}" role="button">Regístrate</a> #}
-              <a class="btn btn-light text-dark me-2 border border-dark" href="#" role="button">Iniciar Sesión</a>
+              <a class="btn btn-light text-dark me-2 border border-dark" href="{{ path('app_login') }}" role="button">Iniciar Sesión</a>
+              {# <a class="btn btn-warning" href="{{ path('app_register') }}" role="button">Regístrate</a> #}
               <a class="btn btn-warning" href="#" role="button">Regístrate</a>
           {% endif %}
           
