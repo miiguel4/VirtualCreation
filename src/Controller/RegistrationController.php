@@ -18,7 +18,8 @@ class RegistrationController extends AbstractController {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response {
+    
+     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response {
         
         if ($this->getUser()) {
             return $this->redirectToRoute('app_inicio');
@@ -53,21 +54,12 @@ class RegistrationController extends AbstractController {
         ]);
     }
 
-    /* public function index(): Response
-    {
-        return $this->render('registration/register.html.twig', [
-            'controller_name' => 'RegistrationController',
-        ]);
-        echo '<script language="javascript">alert("juas");</script>';
-    } */
-    public function validarGmail(Request $request) {
-        $gmail = $_POST['email'];
-        if (filter_var($gmail, FILTER_VALIDATE_EMAIL)) {
-            echo "Esta dirección de correo ($gmail) es válida.";
-        }
+    public function validarGmail($gmail) {
         
         if (filter_var($gmail, FILTER_VALIDATE_EMAIL)) {
-            echo "Esta dirección de correo ($gmail) es válida.";
+            return true;
+        } else {
+            return false;
         }
     }
 }
