@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Virtual Creation{% endblock %}
+{% block title %}Usuarios{% endblock %}
 
 {% block body %}
-  <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
-  <link href="headers.css" rel="stylesheet">
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+    <link href="headers.css" rel="stylesheet">
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -27,7 +30,6 @@
       <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z"/>
     </symbol>
   </svg>
-
 
   <main>
     <div class="b-example-divider"></div>
@@ -57,21 +59,17 @@
           {% endif %}
           {% if app.user %}
             <div class="d-flex flex-row">
-              {% for rol in app.user.Roles %}
-                {% if rol  == "ROLE_ADMIN"%}
-                  <div class="dropdown p-2">
-                    <button class="btn btn-light text-dark me-2 border border-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Admin
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Usuarios</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_parametros_index') }}">Maquinas Virtuales</a></li>
-                    </ul>
-                  </div>
-                {% endif %}
-              {% endfor %}
+              <div class="dropdown p-2">
+                <button class="btn btn-light text-dark me-2 border border-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Admin
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Usuarios</a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_parametros_index') }}">Maquinas Virtuales</a></li>
+                </ul>
+              </div>
                <div class="mb-3 p-2">
-                {# Has iniciado sesión como {{ app.user.userIdentifier }},  #}
+                {# Has iniciado sesión como {{ app.user.userIdentifier }},#}
                 <a class="btn btn-warning" href="{{ path('app_logout') }}" role="button">Cerrar sesión</a>
               </div>
             </div>
@@ -94,7 +92,7 @@
             </a>
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
               <li>
-                <a href="{{ path('app_inicio') }}" class="nav-link text-secondary">
+                <a href="{{ path('app_inicio') }}" class="nav-link text-white">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
                   Inicio
                 </a>
@@ -129,7 +127,82 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-
+    <div id="contenedor">
+        <div class="container-xl">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                               <h2><b>Máquinas Virtuales</b></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="{{ path('app_parametros_new') }}" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Añadir Nueva</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="selectAll">
+                                        <label for="selectAll"></label>
+                                    </span>
+                                </th>
+                                <th>Id</th>
+                              <th>Datastore</th>
+                              <th>CPU</th>
+                              <th>Memoria</th>
+                              <th>SistemaOperativo</th>
+                              <th>Nombre</th>
+                              <th>AdaptadorRed</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for parametro in parametros %}
+                                <tr>
+                                    <td>
+                                        <span class="custom-checkbox">
+                                            <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                            <label for="checkbox1"></label>
+                                        </span>
+                                    </td>
+                                        <td>{{ parametro.id }}</td>
+                                        <td>{{ parametro.Datastore }}</td>
+                                        <td>{{ parametro.CPU }}</td>
+                                        <td>{{ parametro.Memoria }}</td>
+                                        <td>{{ parametro.SistemaOperativo }}</td>
+                                        <td>{{ parametro.Nombre }}</td>
+                                        <td>{{ parametro.AdaptadorRed }}</td>
+                                    <td>
+                                    <div>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                      <div class="p-2">
+                                           <a href="{{ path('app_parametros_edit', {'id': parametro.id}) }}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                      </div>
+                                      <div class="p-2">
+                                        <form method="post" action="{{ path('app_parametros_delete', {'id': parametro.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ parametro.id) }}">
+                                            <button class="delete" class="btn"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">No se encontran registros</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+        </div>
+    </div>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
         <section class="d-flex justify-content-between p-4 text-white" style="background-color: #FFC107">
@@ -164,9 +237,9 @@
                 <h6 class="text-uppercase fw-bold">Virtual Creation</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px"/>
                 <p>
-                  ¿Tienes la necesidad de tener más equipos en tu organización? 
-                  Nosotros te afrecemos esa posibilidad de
-                  de la manera mas económica y rápida posible
+                  Here you can use rows and columns to organize your footer
+                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elit.
                 </p>
               </div>
               <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
@@ -212,11 +285,10 @@
             </div>
           </div>
         </section>
-        <div class="text-center p-3" >
+        <div class="text-center p-3">
           © 2020 Copyright: Virtual Creation
         </div>
       </footer>
     </div>
   </main>
-  
 {% endblock %}

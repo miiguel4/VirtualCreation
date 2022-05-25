@@ -30,4 +30,12 @@
   .dropdown-toggle {
     outline: 0;
   }
+
+  #piedepagina {
+    margin-bottom: 0px !important;
+  }
   
+  .text-center .p-3 {
+    background: black;
+    color: white;
+  }

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+<style>
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+    }
+</style>
+    <div id="editEmployeeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Editar Usuario</h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                    {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_widget(form) }}
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ path('app_user_index') }}" class="btn btn-default">Volver</a>
+                            <button id="boton" name="boton" class="btn btn-success">{{ button_label|default('Actualizar') }}</button>
+                        </div>
+                    {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
