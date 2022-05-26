@@ -34,6 +34,7 @@ class ParametrosController extends AbstractController {
     /**
      * @Route("/new", name="app_parametros_new", methods={"GET", "POST"})
      */
+    
     public function new(Request $request, ParametrosRepository $parametrosRepository): Response {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         foreach ($this->getUser()->getRoles() as $rol) {
