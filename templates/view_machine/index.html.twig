@@ -99,13 +99,13 @@
                 </a>
               </li>
               <li>
-                <a href="{{ path('app_creacionmaquina') }}" class="nav-link text-secondary">
+                <a href="{{ path('app_creacionmaquina') }}" class="nav-link text-white">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
                   Crear un Recursos
                 </a>
               </li>
               <li>
-                <a href="{{ path('app_view_machine') }}" class="nav-link text-white">
+                <a href="{{ path('app_view_machine') }}" class="nav-link text-secondary">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#maquinasvirtuales"/></svg>
                   Máquinas Virtuales
                 </a>
@@ -128,42 +128,27 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-    <form  method="post">
+    
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Datastore</label>
-        <select class="form-select" aria-label="Default select example" name="datastore">
-          <option selected>Selecciona un Datastore</option>
-          <option value="Datastore1">Datastore1</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="CPU">CPU</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="CPU">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="Memoria">Memoria</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="memoria">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Sistema Operativo </label>
-        <select class="form-select" aria-label="Default select example" name="sistemaOperativo">
-          <option selected>Selecciona un Sistema Operativo</option>
-          <option value="Windows">Windows</option>
-          <option value="Debian">Debian</option>
-          <option value="Ubuntu">Ubuntu</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="Nombre">Nombre</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombremaquina">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="AdaptadorRed">Tamaño Disco</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="adaptadorred">
-      </div>
+        {% if maquina is defined %}
+          {% for m in maquina %}
+            <form  method="post">
+              <label for="exampleInputEmail1" class="form-label">{{ m }}</label>
+              <input  type="hidden" name="nombre" value={{ m }}>
+              <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
+              <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
+              <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
+            </form>
+          {% endfor %}
+       {% endif %}
+        <form  method="post">
+              <button type="submit" class="btn btn-primary" name="descargar">Descargar Credenciales</button>
+        </form>
+    <div>
       
-      <button type="submit" class="btn btn-primary" name="crear">Crear</button>
-    </form>
+            
+     
+    </div>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
         <section class="d-flex justify-content-between p-4 text-white" style="background-color: #FFC107">

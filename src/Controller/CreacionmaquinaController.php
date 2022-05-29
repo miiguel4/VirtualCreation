@@ -66,8 +66,6 @@ class CreacionmaquinaController extends AbstractController {
             $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
             $caracteres = substr($nombremaquinaUser, -6);
             
-            /* "SELECT * FROM parametros WHERE nombre LIKE '%iguel2'"; */
-
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
                 'SELECT p
@@ -83,18 +81,12 @@ class CreacionmaquinaController extends AbstractController {
                 $sistemaOperativo = $parametro->getSistemaOperativo();
                 $nombremaquina = $parametro->getNombre();
                 $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                print_r("$adaptadorred");
                 putenv("GOVC_INSECURE=true");
                 putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
                 putenv("GOVC_DATASTORE=datastore1");
                 putenv("GOVC_NETWORK=VM Network");
-                /* shell_exec("govc vm.create -on=false  -m 2048 -c 2 -g windows9_64Guest -disk=20Gb -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso WindowsServer2019"); */
                 shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso '.$nombremaquina.'');
-            }
-            
-            
-          /*  echo shell_exec("vmrc --user=root --password=Tt.676559546 --moid=5 --host=192.168.1.38"); */
-            
+            }    
         } 
     }
     
