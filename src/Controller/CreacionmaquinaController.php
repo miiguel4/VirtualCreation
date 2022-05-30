@@ -16,7 +16,7 @@ class CreacionmaquinaController extends AbstractController {
      */
     public function index(): Response {
         $this->insertar();
-        $this->crear();
+        /* $this->crear(); */
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('creacionmaquina/index.html.twig', [
             'controller_name' => 'CreacionmaquinaController',
@@ -27,7 +27,7 @@ class CreacionmaquinaController extends AbstractController {
     public function insertar() {
         
         if (isset($_POST['crear'])) {
-            /*Comprobar si hay ya creada una maquina con esa nombre en la base de datos*/
+      
             $email = $this->getUser()->getEmail();
             $posicion = strpos($email, '@');
             $nombreUser = substr($email, 0, $posicion);
@@ -38,21 +38,35 @@ class CreacionmaquinaController extends AbstractController {
             $nombremaquina = $_POST['nombremaquina'];
             $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
             $adaptadorred = $_POST['adaptadorred'];
-
-            $parametro = new Parametros();
-            $parametro->setDatastore($datastore);
-            $parametro->setCPU($CPU);
-            $parametro->setMemoria($memoria);
-            $parametro->setSistemaOperativo($sistemaOperativo);
-            $parametro->setNombre( $nombremaquinaUser);
-            $parametro->setAdaptadorRed($adaptadorred);
-
+            
             $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                'SELECT p
+                FROM App:Parametros p
+                WHERE p.Nombre LIKE :nombre'
+            )->setParameter('nombre', $nombremaquinaUser);
 
-            $em->persist($parametro);
-            $em->flush();
+            $buscar = $query->getResult();
+           
+            if (empty($buscar)) {
+                $parametro = new Parametros();
+                $parametro->setDatastore($datastore);
+                $parametro->setCPU($CPU);
+                $parametro->setMemoria($memoria);
+                $parametro->setSistemaOperativo($sistemaOperativo);
+                $parametro->setNombre( $nombremaquinaUser);
+                $parametro->setAdaptadorRed($adaptadorred);
 
-            return new Response('Se ha creado el producto con id: '.$parametro->getId());
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+
+                echo '<script language="javascript">alert("Maquina Creada");</script>';
+                
+            } else {
+                echo '<script language="javascript">alert("Ya existe ese nombre!!!, por favor intenta con otro.");</script>';
+            } 
         } 
      
     }
@@ -85,6 +99,7 @@ class CreacionmaquinaController extends AbstractController {
                 putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
                 putenv("GOVC_DATASTORE=datastore1");
                 putenv("GOVC_NETWORK=VM Network");
+                // Comprobar el sistema operativo
                 shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso '.$nombremaquina.'');
             }    
         } 
