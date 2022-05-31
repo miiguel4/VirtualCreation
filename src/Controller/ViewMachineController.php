@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Parametros;
+
 
 class ViewMachineController extends AbstractController
 {
@@ -36,7 +38,7 @@ class ViewMachineController extends AbstractController
 
     }
 
-    public function conectarse() {
+    public function conectarse () {
         if (isset($_POST['conectar'])) {
             $email = $this->getUser()->getEmail();
             $posicion = strpos($email, '@');
@@ -131,6 +133,38 @@ class ViewMachineController extends AbstractController
                     } else {
                         echo "File does not exist.";
                     }
+        }
+
+        if (isset($_POST['eliminar'])) {
+            $email = $this->getUser()->getEmail();
+            $posicion = strpos($email, '@');
+            $nombreUser = substr($email, 0, $posicion);
+            $nombreacortado = substr($nombreUser, -6);
+        
+            putenv("GOVC_INSECURE=true");
+            putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+            putenv("GOVC_DATASTORE=datastore1");
+            putenv("GOVC_NETWORK=VM Network");
+
+            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $maquinas = explode("\n", $nombremaquina);
+          
+
+            foreach ($maquinas as $key => $value) {
+              
+                if ($value ==  $_POST['nombre']) {
+                    $vm = substr($value, 3);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $query = $em->createQuery(
+                        'DELETE App:Parametros n 
+                        WHERE n.Nombre = :nombre'
+                    )->setParameter("nombre", $vm);
+                    $query->execute();
+                    
+                    shell_exec(" govc vm.destroy /ha-datacenter/$value");
+                }
+            }
         }
     }
 }

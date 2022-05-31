@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Parametros;
-use App\Form\ParametrosType;
-use App\Repository\ParametrosRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CreacionmaquinaController extends AbstractController {
@@ -16,7 +13,7 @@ class CreacionmaquinaController extends AbstractController {
      */
     public function index(): Response {
         $this->insertar();
-        $this->crear();
+        /* $this->crear(); */
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('creacionmaquina/index.html.twig', [
             'controller_name' => 'CreacionmaquinaController',
@@ -35,10 +32,8 @@ class CreacionmaquinaController extends AbstractController {
             $CPU = $_POST['CPU'];
             $memoria = $_POST['memoria'];
             $sistemaOperativo = $_POST['sistemaOperativo'];
-            $nombremaquina = $_POST['nombremaquina'];
             $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
             $adaptadorred = $_POST['adaptadorred'];
-            
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
                 'SELECT p
@@ -78,125 +73,113 @@ class CreacionmaquinaController extends AbstractController {
             $nombreUser = substr($email, 0, $posicion);
             $nombremaquina = $_POST['nombremaquina'];
             $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
-            $caracteres = substr($nombremaquinaUser, -6);
             $tipo = $_POST['tiposistema'];
-
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT p
-                FROM App:Parametros p
-                WHERE p.Nombre LIKE :nombre'
-            )->setParameter('nombre', $nombremaquinaUser);
-
-            $parametros = $query->getResult();
-
-            if ($tipo  == "WindowsServer2019") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso '.$nombremaquina.'');
-                } 
-            } elseif ($tipo  == "WindowsServer2016") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/WindowsServer2016.iso '.$nombremaquina.'');
-                } 
-            } elseif ($tipo == "Windows10") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windows10.iso '.$nombremaquina.'');
-                } 
-            } elseif ($tipo == "debian10") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-10.6.0-amd64-netinst.iso '.$nombremaquina.'');
-                } 
-            } elseif ($tipo  == "debian11") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-11.3.0-amd64-netinst.iso '.$nombremaquina.'');
-                } 
-            } elseif ($tipo == "ubuntu20server") {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-server.iso '.$nombremaquina.'');
-                } 
+           
+            if (empty($tipo)) {
+                echo '<script language="javascript">alert("El tipo no debe de estar vacio.");</script>';
             } else {
-                foreach ($parametros as  $parametro) {
-                    $datastore = $parametro->getDatastore();
-                    $CPU = $parametro->getCPU();
-                    $memoria = $parametro->getMemoria();
-                    $sistemaOperativo = $parametro->getSistemaOperativo();
-                    $nombremaquina = $parametro->getNombre();
-                    $adaptadorred = $parametro->getAdaptadorRed()."Gb";
-                    putenv("GOVC_INSECURE=true");
-                    putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
-                    putenv("GOVC_DATASTORE=datastore1");
-                    putenv("GOVC_NETWORK=VM Network");
-                    
-                    shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-desktop.iso '.$nombremaquina.'');
-                } 
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT p
+                    FROM App:Parametros p
+                    WHERE p.Nombre LIKE :nombre'
+                )->setParameter('nombre', $nombremaquinaUser);
+
+                $parametros = $query->getResult();
+
+                if ($tipo  == "WindowsServer2019") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso '.$nombremaquina.'');
+                    } 
+                } elseif ($tipo  == "WindowsServer2016") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/WindowsServer2016.iso '.$nombremaquina.'');
+                    } 
+                } elseif ($tipo == "Windows10") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windows10.iso '.$nombremaquina.'');
+                    } 
+                } elseif ($tipo == "debian10") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-10.6.0-amd64-netinst.iso '.$nombremaquina.'');
+                    } 
+                } elseif ($tipo  == "debian11") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-11.3.0-amd64-netinst.iso '.$nombremaquina.'');
+                    } 
+                } elseif ($tipo == "ubuntu20server") {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-server.iso '.$nombremaquina.'');
+                    } 
+                } else {
+                    foreach ($parametros as  $parametro) {
+                        $CPU = $parametro->getCPU();
+                        $memoria = $parametro->getMemoria();
+                        $nombremaquina = $parametro->getNombre();
+                        $adaptadorred = $parametro->getAdaptadorRed()."Gb";
+                        putenv("GOVC_INSECURE=true");
+                        putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
+                        putenv("GOVC_DATASTORE=datastore1");
+                        putenv("GOVC_NETWORK=VM Network");
+                        
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-desktop.iso '.$nombremaquina.'');
+                    } 
+                }
             }
         } 
     }
-    
 }

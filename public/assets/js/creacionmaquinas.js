@@ -41,6 +41,7 @@ function addselect () {
         var optionselected = document.createElement("option");
         optionselected.setAttribute('selected','selected');
         optionselected.setAttribute('id','option');
+        optionselected.value = '';
         optionselected.text = "Selecciona un Tipo";
         select.appendChild(optionselected);
         
@@ -84,6 +85,7 @@ function addselect () {
         var optionselected = document.createElement("option");
         optionselected.setAttribute('selected','selected');
         optionselected.setAttribute('id','option');
+        optionselected.value = '';
         optionselected.text = "Selecciona un Tipo";
         select.appendChild(optionselected);
 
@@ -124,6 +126,7 @@ function addselect () {
         var optionselected = document.createElement("option");
         optionselected.setAttribute('selected','selected');
         optionselected.setAttribute('id','option');
+        optionselected.value = '';
         optionselected.text = "Selecciona un Tipo";
         select.appendChild(optionselected);
 

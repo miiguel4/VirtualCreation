@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
   <link href="headers.css" rel="stylesheet">
   <script type="text/javascript" src="{{ asset('assets/js/creacionmaquinas.js') }}"></script>
+  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   
@@ -130,41 +131,69 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-    <form  method="post">
+    <form  class="row g-3 needs-validation" method="post" novalidate>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Datastore</label>
-        <select class="form-select" aria-label="Default select example" name="datastore">
-          <option selected>Selecciona un Datastore</option>
+        <label for="validationCustom04" class="form-label">Datastore</label>
+        <select class="form-select" id="validationCustom04" name="datastore" required>
+          <option selected disabled value="">Selecciona un Datastore</option>
           <option value="Datastore1">Datastore1</option>
         </select>
+        <div class="invalid-feedback">
+          Por favor, seleccione un Datastore.
+        </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="CPU">CPU</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="CPU">
+        <label for="validationCustom01" class="form-label" name="CPU">CPU</label>
+        <input type="number" class="form-control" id="validationCustom01" name="CPU" max="4" required>
+        <div class="invalid-feedback">
+         Por favor, introduce un número de CPU (maximo 4).
+        </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="Memoria">Memoria</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="memoria">
+        <label for="validationCustom02" class="form-label" name="Memoria">Memoria</label>
+        <select class="form-select" name="memoria" id="validationCustom02" required>
+          <option selected disabled value="">Selecciona cuanto quiere de memoria</option>
+          <option value="1024">1GB</option>
+          <option value="2048">2GB</option>
+          <option value="3072">3GB</option>
+          <option value="4096">4GB</option>
+          <option value="5120">5GB</option>
+          <option value="6144">6GB</option>
+          <option value="7168">7GB</option>
+          <option value="8192">8GB</option>
+         
+        </select>
+        <div class="invalid-feedback">
+          Por favor, introduce un número de Memoria.
+        </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Sistema Operativo</label>
-        <select class="form-select" aria-label="Default select example" name="sistemaOperativo" id="operatingsystem" onchange="addselect()">
-          <option selected>Selecciona un Sistema Operativo</option>
+        <label for="validationCustom03" class="form-label">Sistema Operativo</label>
+        <select class="form-select" name="sistemaOperativo" id="operatingsystem" onchange="addselect()" required>
+          <option selected disabled value="">Selecciona un Sistema Operativo</option>
           <option value="Windows">Windows</option>
           <option value="Debian">Debian</option>
           <option value="Ubuntu">Ubuntu</option>
         </select>
+        <div class="invalid-feedback">
+          Por favor, seleccione un Sistema Operativo.
+        </div>
       </div>
       <div class="mb-3" id="tipo"></div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="Nombre">Nombre</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombremaquina">
+        <label for="validationCustom05" class="form-label" name="Nombre">Nombre</label>
+        <input type="text" class="form-control" id="validationCustom05"  name="nombremaquina" required>
+        <div class="invalid-feedback">
+          Por favor, introduce un nombre.
+        </div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label" name="AdaptadorRed">Tamaño Disco</label>
-        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="adaptadorred">
+        <label for="validationCustom06" class="form-label" name="AdaptadorRed">Tamaño Disco</label>
+        <input type="number"  class="form-control" id="validationCustom05" aria-describedby="emailHelp" name="adaptadorred" max="200" required>
+        <div class="invalid-feedback">
+          Por favor, introduce un tamaño de disco.
+        </div>
       </div>
-      
       <button type="submit" class="btn btn-primary" name="crear">Crear</button>
     </form>
     <div class="my-5" id="piedepagina">
@@ -255,5 +284,5 @@
       </footer>
     </div>
   </main>
-  
+  <script type="text/javascript" src="{{ asset('assets/js/validacion.js') }}"></script>
 {% endblock %}
