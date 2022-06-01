@@ -39,3 +39,24 @@
     background: black;
     color: white;
   }
+
+  #contenedor {
+    margin: 2%;
+    background: gainsboro;
+  }
+
+  #validationCustom01, #validationCustom02, #validationCustom03, #validationCustom04, #validationCustom05, #validationCustom06, #validationCustom07, #operatingsystem {
+    border: 2px solid #ffc107;
+  }
+
+  #crear {
+    background: #212529;
+  }
+
+  #vm {
+    margin: 2%;
+  }
+
+  #vm h3 {
+    margin-bottom: 20px;
+  }

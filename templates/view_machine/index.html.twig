@@ -129,27 +129,24 @@
     </header>
     <div class="b-example-divider"></div>
     
-      <div class="mb-3">
+      <div class="mb-3" id="vm">
+      <h3>Máquinas Virtuales</h3>
         {% if maquina is defined %}
-          {% for m in maquina %}
-            <form  method="post">
-              <label for="exampleInputEmail1" class="form-label">{{ m }}</label>
-              <input  type="hidden" name="nombre" value={{ m }}>
-              <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
-              <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
-              <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
-              <button type="submit" class="btn btn-primary" name="eliminar">Eliminar</button>
-            </form>
-          {% endfor %}
-       {% endif %}
-        <form  method="post">
-              <button type="submit" class="btn btn-primary" name="descargar">Descargar Credenciales</button>
-        </form>
-    <div>
-      
-            
-     
-    </div>
+            {% for m in maquina %}
+              <form  method="post">
+                <label for="exampleInputEmail1" class="form-label">{{ m }}</label>
+                <input  type="hidden" name="nombre" value={{ m }}>
+                <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
+                <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
+                <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
+                <button type="submit" class="btn btn-primary" name="eliminar">Eliminar</button>
+              </form>
+            {% endfor %}
+        {% endif %}
+          <form  method="post">
+                <button type="submit" class="btn btn-primary" name="descargar">Descargar Credenciales</button>
+          </form>
+      </div>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
         <section class="d-flex justify-content-between p-4 text-white" style="background-color: #FFC107">
