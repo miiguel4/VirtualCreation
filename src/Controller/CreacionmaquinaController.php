@@ -13,7 +13,7 @@ class CreacionmaquinaController extends AbstractController {
      */
     public function index(): Response {
         $this->insertar();
-        /* $this->crear(); */
+        $this->crear();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('creacionmaquina/index.html.twig', [
             'controller_name' => 'CreacionmaquinaController',
@@ -32,7 +32,9 @@ class CreacionmaquinaController extends AbstractController {
             $CPU = $_POST['CPU'];
             $memoria = $_POST['memoria'];
             $sistemaOperativo = $_POST['sistemaOperativo'];
-            $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
+            $nombremaquina = $_POST['nombremaquina'];
+            $nombremaquinasinespacio = str_replace(' ', '', $nombremaquina);
+            $nombremaquinaUser = $nombremaquinasinespacio.$nombreUser;
             $adaptadorred = $_POST['adaptadorred'];
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
@@ -72,7 +74,8 @@ class CreacionmaquinaController extends AbstractController {
             $posicion = strpos($email, '@');
             $nombreUser = substr($email, 0, $posicion);
             $nombremaquina = $_POST['nombremaquina'];
-            $nombremaquinaUser = $_POST['nombremaquina'].$nombreUser;
+            $nombremaquinasinespacio = str_replace(' ', '', $nombremaquina);
+            $nombremaquinaUser = $nombremaquinasinespacio.$nombreUser;
             $tipo = $_POST['tiposistema'];
            
             if (empty($tipo)) {
@@ -92,6 +95,7 @@ class CreacionmaquinaController extends AbstractController {
                         $CPU = $parametro->getCPU();
                         $memoria = $parametro->getMemoria();
                         $nombremaquina = $parametro->getNombre();
+                        var_dump($nombremaquina);
                         $adaptadorred = $parametro->getAdaptadorRed()."Gb";
                         putenv("GOVC_INSECURE=true");
                         putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
@@ -99,7 +103,7 @@ class CreacionmaquinaController extends AbstractController {
                         putenv("GOVC_NETWORK=VM Network");
 
                         shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/windowsServer2019.iso '.$nombremaquina.'');
-                    } 
+                    }
                 } elseif ($tipo  == "WindowsServer2016") {
                     foreach ($parametros as  $parametro) {
                         $CPU = $parametro->getCPU();

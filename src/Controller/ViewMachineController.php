@@ -28,7 +28,12 @@ class ViewMachineController extends AbstractController
         putenv("GOVC_NETWORK=VM Network");
 
         $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
-        $maquinas = explode("\n", $nombremaquina);
+        
+        if (empty($nombremaquina)) {
+            $maquinas = NULL;
+        } else {
+            $maquinas = explode("\n", $nombremaquina);
+        }
 
         return $this->render('view_machine/index.html.twig', [
             'controller_name' => 'ViewMachineController',

@@ -45,7 +45,7 @@
     background: gainsboro;
   }
 
-  #validationCustom01, #validationCustom02, #validationCustom03, #validationCustom04, #validationCustom05, #validationCustom06, #validationCustom07, #operatingsystem {
+  #validationCustom01, #validationCustom02, #validationCustom03, #validationCustom04, #validationCustom05, #validationCustom06, #validationCustom07, #operatingsystem, #eleccionu, #eleccionw, #elecciond {
     border: 2px solid #ffc107;
   }
 
@@ -59,4 +59,8 @@
 
   #vm h3 {
     margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
   }
