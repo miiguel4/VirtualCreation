@@ -141,7 +141,7 @@ class CreacionmaquinaController extends AbstractController {
                         putenv("GOVC_DATASTORE=datastore1");
                         putenv("GOVC_NETWORK=VM Network");
                         
-                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-10.6.0-amd64-netinst.iso '.$nombremaquina.'');
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g otherLinux64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-10.6.0-amd64-netinst.iso '.$nombremaquina.'');
                     } 
                 } elseif ($tipo  == "debian11") {
                     foreach ($parametros as  $parametro) {
@@ -154,7 +154,7 @@ class CreacionmaquinaController extends AbstractController {
                         putenv("GOVC_DATASTORE=datastore1");
                         putenv("GOVC_NETWORK=VM Network");
                         
-                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-11.3.0-amd64-netinst.iso '.$nombremaquina.'');
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g otherLinux64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/debian-11.3.0-amd64-netinst.iso '.$nombremaquina.'');
                     } 
                 } elseif ($tipo == "ubuntu20server") {
                     foreach ($parametros as  $parametro) {
@@ -167,7 +167,7 @@ class CreacionmaquinaController extends AbstractController {
                         putenv("GOVC_DATASTORE=datastore1");
                         putenv("GOVC_NETWORK=VM Network");
                         
-                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-server.iso '.$nombremaquina.'');
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g ubuntu64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-server.iso '.$nombremaquina.'');
                     } 
                 } else {
                     foreach ($parametros as  $parametro) {
@@ -180,7 +180,7 @@ class CreacionmaquinaController extends AbstractController {
                         putenv("GOVC_DATASTORE=datastore1");
                         putenv("GOVC_NETWORK=VM Network");
                         
-                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g windows9_64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-desktop.iso '.$nombremaquina.'');
+                        shell_exec('govc vm.create -on=false  -m '.$memoria.' -c '.$CPU.' -g ubuntu64Guest -disk='.$adaptadorred.' -disk.controller=pvscsi -iso=ISO/ubuntu-20.04.1-desktop.iso '.$nombremaquina.'');
                     } 
                 }
             }

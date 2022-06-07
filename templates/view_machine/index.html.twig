@@ -133,10 +133,9 @@
       <h3>Máquinas Virtuales</h3>
          {#  {{ dump(maquina) }} #}
         {% if maquina is empty %}
-          <p class="text-xl-start">Ningún Recurso Creado</p>
-            <small class="text-muted">With faded secondary text</small>
+          <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
         {% else %}
-          {% if maquina is defined %}
+          {% if maquina is defined and lg is defined%}
               {% for m in maquina %}
               {% if (m is empty) or (lg is empty) %}
                   <input type="hidden">
