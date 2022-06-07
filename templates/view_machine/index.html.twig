@@ -131,20 +131,25 @@
     
       <div class="mb-3" id="vm">
       <h3>Máquinas Virtuales</h3>
-          {# {{ dump(maquina) }} #}
+         {#  {{ dump(maquina) }} #}
         {% if maquina is empty %}
           <p class="text-xl-start">Ningún Recurso Creado</p>
+            <small class="text-muted">With faded secondary text</small>
         {% else %}
           {% if maquina is defined %}
               {% for m in maquina %}
-                <form  method="post">
-                  <label for="exampleInputEmail1" class="form-label">{{ m }}</label>
-                  <input  type="hidden" name="nombre" value={{ m }}>
-                  <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
-                  <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
-                  <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
-                  <button type="submit" class="btn btn-primary" name="eliminar">Eliminar</button>
-                </form>
+              {% if (m is empty) or (lg is empty) %}
+                  <input type="hidden">
+                {% else %}
+                  <form  method="post">
+                    <label for="exampleInputEmail1" class="form-label"> {{ m [3:-lg] }}</label>
+                    <input  type="hidden" name="nombre" value={{ m }}>
+                    <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
+                    <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
+                    <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
+                    <button type="submit" class="btn btn-primary" name="eliminar">Eliminar</button>
+                  </form>
+                  {% endif %}
               {% endfor %}
           {% endif %}
             <form  method="post">

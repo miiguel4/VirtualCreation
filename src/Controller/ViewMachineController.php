@@ -21,24 +21,26 @@ class ViewMachineController extends AbstractController
         $posicion = strpos($email, '@');
         $nombreUser = substr($email, 0, $posicion);
         $nombreacortado = substr($nombreUser, -6);
-        
+       
         putenv("GOVC_INSECURE=true");
         putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
         putenv("GOVC_DATASTORE=datastore1");
         putenv("GOVC_NETWORK=VM Network");
 
         $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
-        
+
         if (empty($nombremaquina)) {
             $maquinas = NULL;
+            $longitud = NULL;
         } else {
             $maquinas = explode("\n", $nombremaquina);
+            $longitud = strlen($nombreacortado);
         }
 
         return $this->render('view_machine/index.html.twig', [
             'controller_name' => 'ViewMachineController',
             'maquina' => $maquinas,
-            
+            'lg'      => $longitud,
         ]);
 
     }
@@ -57,11 +59,10 @@ class ViewMachineController extends AbstractController
 
             $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
             $maquinas = explode("\n", $nombremaquina);
-          
-
+           
             foreach ($maquinas as $key => $value) {
               
-                if ($value ==  $_POST['nombre']) {
+                if ($value == $_POST['nombre']) {
                     $console =  shell_exec("govc vm.console /ha-datacenter/".$value);
                     $moid= $nombreacortado = substr(  $console, -3);
                     $number = $moid;
@@ -91,7 +92,6 @@ class ViewMachineController extends AbstractController
               
                 if ($value ==  $_POST['nombre']) {
                     shell_exec("govc vm.power -off -force /ha-datacenter/$value");
-                    /* echo "govc vm.power -off -force /ha-datacenter/$value"; */
                 }
             }
         }
