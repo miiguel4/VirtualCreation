@@ -128,11 +128,65 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-    
       <div class="mb-3" id="vm">
-      <h3>Máquinas Virtuales</h3>
-         {#  {{ dump(maquina) }} #}
+        <h3>Máquinas Virtuales</h3>
         {% if maquina is empty %}
+          <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
+        {% else %}
+            <form  method="post">
+              <div id="bt">
+                <ul id="lista">
+                    <li><a href="{{ path('app_creacionmaquina') }}"><i class="bi bi-server" id="create"></i> Crear/Registrar Máquina Virtual  </a>  |</li>
+                    <li><button type="submit" name="conectar" class="boton"><i class="bi bi-box-arrow-up-right" id="console"></i> Consola </button> | </li>
+                    <li><button type="submit" name="encender" class="boton"><i class="bi bi-play-fill" id="power"></i> Encender </button> </li>
+                    <li><button type="submit" name="apagar" class="boton"><i class="bi bi-square-fill" id="poweroff"></i> Apagar </button> </li>
+                    <li><button type="submit" name="suspender" class="boton"><i class="bi bi-pause-fill" id="suspen"></i> Suspender </button> </li>
+                    <li><button type="submit" name="eliminar" class="boton"><i class="bi bi-trash3-fill" id="delete"></i> Eliminar </button> | </li>
+                    <button type="submit" class="btn btn-primary btn-sm" name="descargar">Descargar Credenciales</button>
+                </ul>
+              </div>
+              {% if maquina is defined and lg is defined%}
+                <table class="table table-light table-bordered">
+                      <thead class="table-warning">
+                          <tr>
+                            <th scope="col">Máquina Virtual</th>
+                            <th scope="col">Espacio Utilizado</th>
+                            <th scope="col">Sistema Operativo Invitado </th>
+                            <th scope="col">Nombre del Host </th>
+                            <th scope="col">CPU de Host </th>
+                            <th scope="col">Memoria de Host </th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                {% for m in maquina %}
+                {% if (m is empty) or (lg is empty) %}
+                    <input type="hidden">
+                {% else %}
+                      <tr>
+                        <th scope="row">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkbox" value={{ m }}>
+                            <label class="form-check-label" for="flexCheckDefault">
+                              {{ m [3:-lg] }}
+                            </label>
+                          </div>
+                        </th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                      </tr>
+                {% endif %}
+                {% endfor %}
+                      </tbody>
+                  </table>
+              {% endif %}
+            </form>
+        {% endif %}
+        
+         {#  {{ dump(maquina) }} #}
+        {# {% if maquina is empty %}
           <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
         {% else %}
           {% if maquina is defined and lg is defined%}
@@ -154,7 +208,7 @@
             <form  method="post">
                   <button type="submit" class="btn btn-primary" name="descargar">Descargar Credenciales</button>
             </form>
-        {% endif %}
+        {% endif %} #}
       </div>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">

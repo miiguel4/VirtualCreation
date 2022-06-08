@@ -64,3 +64,63 @@
   label {
     font-weight: bold;
   }
+
+  #lista {
+    list-style:none;
+    display: flex;
+    align-items: center;
+  }
+
+   
+  #lista a {
+    text-decoration: none;
+    color: black;
+  }
+
+
+  #lista  a:hover {
+    background-color: #e9f6fd;
+    border: 1px solid #d8effe;
+  }
+
+  #lista li {
+   margin-right: 10px;
+  }
+
+  #power {
+   color: #6bd33e;
+  }
+  
+  #poweroff {
+    color: #ff3530;
+    width: 5px;
+    height: 5px;
+  }
+
+  #suspen {
+    color: #fd9f17;
+  }
+
+  #console {
+    color:  #839AB5;
+  }
+
+  #delete {
+    color:  #ab2110;
+  }
+
+  #create {
+    color: #80bded;
+  }
+
+  .boton {
+    padding: 0; 
+    border: none; 
+    background: none;
+  }
+
+  .boton:hover {
+    background-color: #e9f6fd;
+    border: 1px solid #d8effe;
+  }
+ 
