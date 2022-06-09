@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,31 +14,32 @@ class ContactoController extends AbstractController
     /**
      * @Route("/contacto", name="app_contacto")
      */
-    /* public function index(): Response
-    {
+    public function index(): Response {
         $this->sendEmail();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('contacto/index.html.twig', [
             'controller_name' => 'ContactoController',
         ]);
-    } */
+    } 
 
-    public function sendEmail(MailerInterface $mailer)
-    {
-        $email = (new Email())
-            ->from('mruirub878@g.educaand.es')
-            ->to('adminvc@correo.mrpro.comm')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
+    public function sendEmail() {
+        if (isset($_POST['enviar'])) {
+
+            $correo = $_POST['email'];
+            $nombre = $_POST['nombre'];
+            $mensaje = $_POST['mensaje'];
+
+            $email = (new Email())
+            ->from($correo)
+            ->to('adminvc@correo.mrpro.com')
+            ->subject('Mensaje Sorporte')
             ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
-
-        $mailer->send($email);
-
-        // ...
+            ->html("Nombre del usuario: ".$nombre."<br> Mensaje: ".$mensaje);
+            $dns = 'smtp://correo.mrpro.com:25?verify_peer=false';
+            $transport = Transport::fromDsn($dns);
+            $transport->send($email);
+        }
     }
-    
 }
+
+
