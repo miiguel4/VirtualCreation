@@ -4,7 +4,17 @@
 
 {% block body %}
   <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
-  <link href="headers.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/perfil.css') }}">
+  <style>
+      #piedepagina{
+          margin: 0% !important;
+      }
+      
+      #sitio {
+        height: 5px !important;
+        width: 200px !important
+      }
+  </style>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -72,7 +82,6 @@
                 {% endif %}
               {% endfor %}
                <div class="mb-3 p-2">
-                {# Has iniciado sesión como {{ app.user.userIdentifier }},  #}
                 <a class="btn btn-warning" href="{{ path('app_logout') }}" role="button">Cerrar sesión</a>
               </div>
             </div>
@@ -130,7 +139,51 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-
+    <section class="vh-100" style="background-color: #f4f5f7;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+              <div class="card mb-3" style="border-radius: .5rem;">
+                <div class="row g-0">
+                  <div class="col-md-4 gradient-custom text-center text-white"
+                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                    <img src="{{ asset('assets/img/perfil.png') }}"
+                      alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                    <h5>{{ nombre }}</h5>
+                    <p>Usuario</p>
+                    <i class="bi bi-pencil-square"></i>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body p-4">
+                      <h6>Información</h6>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                          <h6>Email</h6>
+                          <p class="text-muted"> {{ app.user.userIdentifier }} </p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6>Numero de Máquinas</h6>
+                          <p class="text-muted">{{ numeroMaquina }}</p>
+                        </div>
+                      </div>
+                      <h6>Sitio</h6>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-1">
+                        <div class="col-6 mb-3">
+                          <h6>Website</h6>
+                          <p class="text-muted" id="sitio">virtualcreation.mrpro.com</p>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
         <section class="d-flex justify-content-between p-4 text-white" style="background-color: #FFC107">
