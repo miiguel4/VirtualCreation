@@ -24,24 +24,23 @@ class CreacionmaquinaController extends AbstractController {
     public function insertar() {
         
         if (isset($_POST['crear'])) {
-      
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
+            
+            $id = $this->getUser()->getId();
             $datastore = $_POST['datastore'];
             $CPU = $_POST['CPU'];
             $memoria = $_POST['memoria'];
             $sistemaOperativo = $_POST['sistemaOperativo'];
             $nombremaquina = $_POST['nombremaquina'];
             $nombremaquinasinespacio = str_replace(' ', '', $nombremaquina);
-            $nombremaquinaUser = $nombremaquinasinespacio.$nombreUser;
+            $nombremaquinaId = $nombremaquinasinespacio."_".$id;
             $adaptadorred = $_POST['adaptadorred'];
+
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
                 'SELECT p
                 FROM App:Parametros p
                 WHERE p.Nombre LIKE :nombre'
-            )->setParameter('nombre', $nombremaquinaUser);
+            )->setParameter('nombre', $nombremaquinaId);
 
             $buscar = $query->getResult();
            
@@ -51,7 +50,7 @@ class CreacionmaquinaController extends AbstractController {
                 $parametro->setCPU($CPU);
                 $parametro->setMemoria($memoria);
                 $parametro->setSistemaOperativo($sistemaOperativo);
-                $parametro->setNombre( $nombremaquinaUser);
+                $parametro->setNombre( $nombremaquinaId);
                 $parametro->setAdaptadorRed($adaptadorred);
 
                 $em = $this->getDoctrine()->getManager();
@@ -70,12 +69,12 @@ class CreacionmaquinaController extends AbstractController {
 
     public function crear() {
         if (isset($_POST['crear'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
+            $id = $this->getUser()->getId();
+            
             $nombremaquina = $_POST['nombremaquina'];
             $nombremaquinasinespacio = str_replace(' ', '', $nombremaquina);
-            $nombremaquinaUser = $nombremaquinasinespacio.$nombreUser;
+            
+            $nombremaquinaId = $nombremaquinasinespacio."_".$id;
             $tipo = $_POST['tiposistema'];
            
             if (empty($tipo)) {
@@ -86,8 +85,8 @@ class CreacionmaquinaController extends AbstractController {
                     'SELECT p
                     FROM App:Parametros p
                     WHERE p.Nombre LIKE :nombre'
-                )->setParameter('nombre', $nombremaquinaUser);
-
+                )->setParameter('nombre', $nombremaquinaId);
+               
                 $parametros = $query->getResult();
 
                 if ($tipo  == "WindowsServer2019") {
@@ -95,7 +94,6 @@ class CreacionmaquinaController extends AbstractController {
                         $CPU = $parametro->getCPU();
                         $memoria = $parametro->getMemoria();
                         $nombremaquina = $parametro->getNombre();
-                        var_dump($nombremaquina);
                         $adaptadorred = $parametro->getAdaptadorRed()."Gb";
                         putenv("GOVC_INSECURE=true");
                         putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");

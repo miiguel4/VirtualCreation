@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Parametros;
+use App\Entity\Log;
 
 
 class ViewMachineController extends AbstractController
@@ -17,24 +18,21 @@ class ViewMachineController extends AbstractController
         $this->conectarse();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $email = $this->getUser()->getEmail();
-        $posicion = strpos($email, '@');
-        $nombreUser = substr($email, 0, $posicion);
-        $nombreacortado = substr($nombreUser, -6);
+        $id = $this->getUser()->getId();
        
         putenv("GOVC_INSECURE=true");
         putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
         putenv("GOVC_DATASTORE=datastore1");
         putenv("GOVC_NETWORK=VM Network");
 
-        $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+        $nombremaquina = shell_exec("govc find vm -name *".$id."");
 
         if (empty($nombremaquina)) {
             $maquinas = NULL;
             $longitud = NULL;
         } else {
             $maquinas = explode("\n", $nombremaquina);
-            $longitud = strlen($nombreacortado);
+            $longitud = strlen($id)+1;
         }
 
         return $this->render('view_machine/index.html.twig', [
@@ -47,25 +45,36 @@ class ViewMachineController extends AbstractController
 
     public function conectarse () {
         if (isset($_POST['conectar'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
-            $nombreacortado = substr($nombreUser, -6);
-        
+            
+            $id = $this->getUser()->getId();
+            $nombreUsuario = $this->getUser()->getEmail();;
+            $accion = $_POST['conectar'];
+            $fecha =  date('m-d-Y h:i:s a', time()); 
+
             putenv("GOVC_INSECURE=true");
             putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
             putenv("GOVC_DATASTORE=datastore1");
             putenv("GOVC_NETWORK=VM Network");
 
-            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $nombremaquina = shell_exec("govc find vm -name *".$id."");
             $maquinas = explode("\n", $nombremaquina);
             
             if (isset($_POST['checkbox'])) {
-                foreach ($maquinas as $key => $value) {
-              
+
+                $parametro = new log();
+                $parametro->setAccion($accion);
+                $parametro->setFecha($fecha);
+                $parametro->setUsuario($nombreUsuario);
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+
+                foreach ($maquinas as $value) {
                     if ($value == $_POST['checkbox']) {
-                        $console =  shell_exec("govc vm.console /ha-datacenter/".$value);
-                        $moid= $nombreacortado = substr(  $console, -3);
+                        $console =  shell_exec("govc vm.console /ha-datacenter/".$value); 
+                        $moid= $id = substr(  $console, -3);
                         $number = $moid;
                         $url = "vmrc://global@192.168.1.38/?moid=$number";
                         $url2 = trim($url);
@@ -78,21 +87,32 @@ class ViewMachineController extends AbstractController
         }
 
         if (isset($_POST['apagar'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
-            $nombreacortado = substr($nombreUser, -6);
-        
+
+            $id = $this->getUser()->getId();
+            $nombreUsuario = $this->getUser()->getEmail();;
+            $accion = $_POST['apagar'];
+            $fecha =  date('m-d-Y h:i:s a', time()); 
+
             putenv("GOVC_INSECURE=true");
             putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
             putenv("GOVC_DATASTORE=datastore1");
             putenv("GOVC_NETWORK=VM Network");
 
-            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $nombremaquina = shell_exec("govc find vm -name *".$id."");
             $maquinas = explode("\n", $nombremaquina);
           
             if (isset($_POST['checkbox'])) {
-                foreach ($maquinas as $key => $value) {
+
+                $parametro = new log();
+                $parametro->setAccion($accion);
+                $parametro->setFecha($fecha);
+                $parametro->setUsuario($nombreUsuario);
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+                foreach ($maquinas as $value) {
               
                     if ($value ==  $_POST['checkbox']) {
                         shell_exec("govc vm.power -off -force /ha-datacenter/$value");
@@ -103,21 +123,33 @@ class ViewMachineController extends AbstractController
         }
 
         if (isset($_POST['encender'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
-            $nombreacortado = substr($nombreUser, -6);
-        
+
+            $id = $this->getUser()->getId();
+            $nombreUsuario = $this->getUser()->getEmail();;
+            $accion = $_POST['encender'];
+            $fecha =  date('m-d-Y h:i:s a', time()); 
+
             putenv("GOVC_INSECURE=true");
             putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
             putenv("GOVC_DATASTORE=datastore1");
             putenv("GOVC_NETWORK=VM Network");
 
-            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $nombremaquina = shell_exec("govc find vm -name *".$id."");
             $maquinas = explode("\n", $nombremaquina);
           
             if (isset($_POST['checkbox'])) {
-                foreach ($maquinas as $key => $value) {
+
+                $parametro = new log();
+                $parametro->setAccion($accion);
+                $parametro->setFecha($fecha);
+                $parametro->setUsuario($nombreUsuario);
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+
+                foreach ($maquinas as $value) {
               
                     if ($value ==  $_POST['checkbox']) {
                         shell_exec("govc vm.power -on /ha-datacenter/$value");
@@ -149,21 +181,33 @@ class ViewMachineController extends AbstractController
         }
 
         if (isset($_POST['eliminar'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
-            $nombreacortado = substr($nombreUser, -6);
-        
+            $id = $this->getUser()->getId();
+            $nombreUsuario = $this->getUser()->getEmail();;
+            $accion = $_POST['eliminar'];
+            $fecha =  date('m-d-Y h:i:s a', time()); 
+
+
             putenv("GOVC_INSECURE=true");
             putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
             putenv("GOVC_DATASTORE=datastore1");
             putenv("GOVC_NETWORK=VM Network");
 
-            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $nombremaquina = shell_exec("govc find vm -name *".$id."");
             $maquinas = explode("\n", $nombremaquina);
           
             if (isset($_POST['checkbox'])) {
-                foreach ($maquinas as $key => $value) {
+
+                $parametro = new log();
+                $parametro->setAccion($accion);
+                $parametro->setFecha($fecha);
+                $parametro->setUsuario($nombreUsuario);
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+
+                foreach ($maquinas as $value) {
               
                     if ($value ==  $_POST['checkbox']) {
                         $vm = substr($value, 3);
@@ -183,22 +227,33 @@ class ViewMachineController extends AbstractController
         }
 
         if (isset($_POST['suspender'])) {
-            $email = $this->getUser()->getEmail();
-            $posicion = strpos($email, '@');
-            $nombreUser = substr($email, 0, $posicion);
-            $nombreacortado = substr($nombreUser, -6);
-        
+            
+            $id = $this->getUser()->getId();
+            $nombreUsuario = $this->getUser()->getEmail();;
+            $accion = $_POST['suspender'];
+            $fecha =  date('m-d-Y h:i:s a', time());  
+            
             putenv("GOVC_INSECURE=true");
             putenv("GOVC_URL=https://root:Tt.676559546@192.168.1.38/sdk");
             putenv("GOVC_DATASTORE=datastore1");
             putenv("GOVC_NETWORK=VM Network");
 
-            $nombremaquina = shell_exec("govc find vm -name *".$nombreacortado."");
+            $nombremaquina = shell_exec("govc find vm -name *".$id."");
             $maquinas = explode("\n", $nombremaquina);
           
             if (isset($_POST['checkbox'])) {
+                
+                $parametro = new log();
+                $parametro->setAccion($accion);
+                $parametro->setFecha($fecha);
+                $parametro->setUsuario($nombreUsuario);
 
-                 foreach ($maquinas as $key => $value) {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($parametro);
+                $em->flush();
+
+                 foreach ($maquinas as $value) {
                     if ($value ==  $_POST['checkbox']) {
                         shell_exec("govc vm.power -suspend=true /ha-datacenter/$value");
                     }

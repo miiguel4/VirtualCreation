@@ -54,7 +54,7 @@
   }
 
   #vm {
-    margin: 2%;
+    margin: 3%;
   }
 
   #vm h3 {
@@ -122,5 +122,13 @@
   .boton:hover {
     background-color: #e9f6fd;
     border: 1px solid #d8effe;
+  }
+
+  #contacto {
+    margin-top: 3%;
+  }
+
+  #emailbuttom{
+    margin-top: 2%;
   }
  

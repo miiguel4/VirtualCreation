@@ -5,6 +5,7 @@
 {% block body %}
   <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
   <link href="headers.css" rel="stylesheet">
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="bootstrap" viewBox="0 0 118 94">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
@@ -106,13 +107,13 @@
                 </a>
               </li>
               <li>
-                <a href="{{ path('app_view_machine') }}" class="nav-link text-secondary">
+                <a href="{{ path('app_view_machine') }}" class="nav-link text-white">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#maquinasvirtuales"/></svg>
                   Máquinas Virtuales
                 </a>
               </li>
               <li>
-                <a href="{{ path('app_contacto') }}" class="nav-link text-white">
+                <a href="{{ path('app_contacto') }}" class="nav-link text-secondary">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
                   Contáctanos
                 </a>
@@ -129,88 +130,27 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
-      <div class="mb-3" id="vm">
-        <h3>Máquinas Virtuales</h3>
-        {% if maquina is empty %}
-          <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
-        {% else %}
-            <form  method="post">
-              <div id="bt">
-                <ul id="lista">
-                    <li><a href="{{ path('app_creacionmaquina') }}"><i class="bi bi-server" id="create"></i> Crear/Registrar Máquina Virtual  </a>  |</li>
-                    <li>
-                    <button type="submit" name="conectar" value="conectar" class="boton"><i class="bi bi-box-arrow-up-right" id="console"></i> Consola </button> | </li>
-                    <li><button type="submit" name="encender" class="boton" value="encender"><i class="bi bi-play-fill" id="power"></i> Encender </button> </li>
-                    <li><button type="submit" name="apagar" class="boton" value="apagar"><i class="bi bi-square-fill" id="poweroff"></i> Apagar </button> </li>
-                    <li><button type="submit" name="suspender" class="boton" value="suspender"><i class="bi bi-pause-fill" id="suspen"></i> Suspender </button> </li>
-                    <li><button type="submit" name="eliminar" class="boton" value="eliminar"><i class="bi bi-trash3-fill" id="delete"></i> Eliminar </button> | </li>
-                    <button type="submit" class="btn btn-primary btn-sm" name="descargar">Descargar Credenciales</button>
-                </ul>
-              </div>
-              {% if maquina is defined and lg is defined%}
-                <table class="table table-light table-bordered">
-                      <thead class="table-warning">
-                          <tr>
-                            <th scope="col">Máquina Virtual</th>
-                            <th scope="col">Espacio Utilizado</th>
-                            <th scope="col">Sistema Operativo Invitado </th>
-                            <th scope="col">Nombre del Host </th>
-                            <th scope="col">CPU de Host </th>
-                            <th scope="col">Memoria de Host </th>
-                          </tr>
-                        </thead>
-                      <tbody>
-                {% for m in maquina %}
-                {% if (m is empty) or (lg is empty) %}
-                    <input type="hidden">
-                {% else %}
-                      <tr>
-                        <th scope="row">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="checkbox" value={{ m }}>
-                            <label class="form-check-label" for="flexCheckDefault">
-                              {{ m [3:-lg] }}
-                            </label>
-                          </div>
-                        </th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                      </tr>
-                {% endif %}
-                {% endfor %}
-                      </tbody>
-                  </table>
-              {% endif %}
-            </form>
-        {% endif %}
-        
-         {#  {{ dump(maquina) }} #}
-        {# {% if maquina is empty %}
-          <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
-        {% else %}
-          {% if maquina is defined and lg is defined%}
-              {% for m in maquina %}
-              {% if (m is empty) or (lg is empty) %}
-                  <input type="hidden">
-                {% else %}
-                  <form  method="post">
-                    <label for="exampleInputEmail1" class="form-label"> {{ m [3:-lg] }}</label>
-                    <input  type="hidden" name="nombre" value={{ m }}>
-                    <button type="submit" class="btn btn-primary" name="conectar">Conectar</button>
-                    <button type="submit" class="btn btn-primary" name="apagar">Apagar</button>
-                    <button type="submit" class="btn btn-primary" name="encender">Enceder</button>
-                    <button type="submit" class="btn btn-primary" name="eliminar">Eliminar</button>
-                  </form>
-                  {% endif %}
-              {% endfor %}
-          {% endif %}
-            <form  method="post">
-                  <button type="submit" class="btn btn-primary" name="descargar">Descargar Credenciales</button>
-            </form>
-        {% endif %} #}
+    <div class="container" id="contacto">
+        <form  method="POST">
+          <h3 style="text-align: center;">Contacta con nosotros</h3>
+          {# <div class="form-group">
+            <label for="email">Email Administrador</label>
+            <input name="email" type="email"  class="form-control" id="email"  disabled="disabled" value="adminvc@correo.mrpro.com" name="admin" required >
+          </div> #}
+          <div class="form-group">
+            <label for="email">Nombre</label>
+            <input name="text" type="text"  class="form-control" id="usuario" placeholder="Introduce una direccion de correo " name="nombre" required >
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input name="text" type="text"  class="form-control" id="usuario" placeholder="Introduce una direccion de correo " name="email" required >
+          </div>
+          <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea name="message" class="form-control" id="message" rows="5" placeholder="Introduce el mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary float-right" id="emailbuttom">Enviar</button>
+        </form>
       </div>
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
@@ -246,9 +186,9 @@
                 <h6 class="text-uppercase fw-bold">Virtual Creation</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px"/>
                 <p>
-                  Here you can use rows and columns to organize your footer
-                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit.
+                  ¿Tienes la necesidad de tener más equipos en tu organización? 
+                  Nosotros te afrecemos esa posibilidad de
+                  de la manera mas económica y rápida posible
                 </p>
               </div>
               <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">

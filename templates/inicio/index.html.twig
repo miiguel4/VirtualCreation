@@ -66,6 +66,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Usuarios</a></li>
                     <li><a class="dropdown-item" href="{{ path('app_parametros_index') }}">Maquinas Virtuales</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_log_index') }}">Registro Log</a></li>
                     </ul>
                   </div>
                 {% endif %}
@@ -112,13 +113,13 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{{ path('app_contacto') }}" class="nav-link text-white">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
                   Contáctanos
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{{ path('app_perfil') }}" class="nav-link text-white">
                   <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
                  Perfil
                 </a>
