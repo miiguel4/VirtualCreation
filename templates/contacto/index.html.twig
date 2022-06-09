@@ -130,28 +130,26 @@
       </div>
     </header>
     <div class="b-example-divider"></div>
+
     <div class="container" id="contacto">
         <form  method="POST">
           <h3 style="text-align: center;">Contacta con nosotros</h3>
-          {# <div class="form-group">
-            <label for="email">Email Administrador</label>
-            <input name="email" type="email"  class="form-control" id="email"  disabled="disabled" value="adminvc@correo.mrpro.com" name="admin" required >
-          </div> #}
           <div class="form-group">
             <label for="email">Nombre</label>
-            <input name="text" type="text"  class="form-control" id="usuario" placeholder="Introduce una direccion de correo " name="nombre" required >
+            <input type="text"  class="form-control" placeholder="Introduce tu nombre" name="nombre" required >
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input name="text" type="text"  class="form-control" id="usuario" placeholder="Introduce una direccion de correo " name="email" required >
+            <input type="email"  class="form-control" placeholder={{ app.user.userIdentifier }} name="email" required >
           </div>
           <div class="form-group">
             <label for="message">Mensaje</label>
-            <textarea name="message" class="form-control" id="message" rows="5" placeholder="Introduce el mensaje" name="mensaje" required></textarea>
+            <textarea class="form-control" rows="3" placeholder="Introduce el mensaje" name="mensaje" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary float-right" id="emailbuttom">Enviar</button>
+          <button type="submit" class="btn btn-primary float-right" name="enviar" id="emailbuttom">Enviar</button>
         </form>
       </div>
+
     <div class="my-5" id="piedepagina">
       <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
         <section class="d-flex justify-content-between p-4 text-white" style="background-color: #FFC107">
