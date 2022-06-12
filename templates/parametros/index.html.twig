@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="{{ asset('assets/css/headers.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
-    <link href="headers.css" rel="stylesheet">
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -43,13 +42,12 @@
                 </svg>
             </div>
             <div class="col-6">
-              <p>Soporte (00) 33 169 7720</p>
+              <p>Soporte (34) 678 56 4509</p>
             </div>
           </div>
         </div>
-        
-        <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-          <input type="search" class="form-control" placeholder="Buscar recursos, servicios..." aria-label="Search" style="width : 450px" >
+        <form method="post" class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+          <span class="form-control"  name="buscar" style="width : 450px" disabled>{{ "Has iniciado como " ~ app.user.userIdentifier}}</span>
         </form>
         <div class="text-end">
           {% if error is defined %}
@@ -70,7 +68,6 @@
                 </ul>
               </div>
                <div class="mb-3 p-2">
-                {# Has iniciado sesión como {{ app.user.userIdentifier }},#}
                 <a class="btn btn-warning" href="{{ path('app_logout') }}" role="button">Cerrar sesión</a>
               </div>
             </div>
@@ -231,62 +228,62 @@
             </a>
           </div>
         </section>
-        <section class="">
+        <section class="" id="pie">
           <div class="container text-center text-md-start mt-5">
             <div class="row mt-3">
               <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <h6 class="text-uppercase fw-bold">Virtual Creation</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px"/>
                 <p>
-                  Here you can use rows and columns to organize your footer
-                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit.
+                  ¿Tienes la necesidad de tener más equipos en tu organización? 
+                  Nosotros te afrecemos esa posibilidad de
+                  de la manera mas económica y rápida posible
                 </p>
               </div>
               <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 class="text-uppercase fw-bold">Products</h6>
+                <h6 class="text-uppercase fw-bold">Recursos para VC</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
                 <p>
-                  <a href="#!" class="text-dark">MDBootstrap</a>
+                  <a href="#!" class="text-dark">Introducción</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">MDWordPress</a>
+                  <a href="#!" class="text-dark">Formación</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">BrandFlow</a>
+                  <a href="#!" class="text-dark">Preguntas Frecuentes</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">Bootstrap Angular</a>
+                  <a href="#!" class="text-dark">Informes de analistas</a>
                 </p>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 class="text-uppercase fw-bold">Useful links</h6>
+                <h6 class="text-uppercase fw-bold">Ayuda</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px"/>
                 <p>
-                  <a href="#!" class="text-dark">Your Account</a>
+                  <a href="#!" class="text-dark">Contáctenos</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">Become an Affiliate</a>
+                  <a href="#!" class="text-dark">Centro de Conocimineto</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">Shipping Rates</a>
+                  <a href="#!" class="text-dark">Información General</a>
                 </p>
                 <p>
-                  <a href="#!" class="text-dark">Help</a>
+                  <a href="#!" class="text-dark">Legal</a>
                 </p>
               </div>
               <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                <h6 class="text-uppercase fw-bold">Contact</h6>
+                <h6 class="text-uppercase fw-bold">Contacto</h6>
                 <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px"/>
-                <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-                <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
-                <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-                <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                <p><i class="fas fa-home mr-3"></i> Granada, Granada 10012, España</p>
+                <p><i class="fas fa-envelope mr-3"></i> adminvc@correo.mrpro.com</p>
+                <p><i class="fas fa-phone mr-3"></i> + 34 678 564 509</p>
+                <p><i class="fas fa-print mr-3"></i> + 34 601 124 531</p>
               </div>
             </div>
           </div>
         </section>
-        <div class="text-center p-3">
+        <div class="text-center p-3" >
           © 2020 Copyright: Virtual Creation
         </div>
       </footer>

@@ -32,6 +32,11 @@ class Log
      */
     private $usuario;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Nombre;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Log
     public function setUsuario(string $usuario): self
     {
         $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->Nombre;
+    }
+
+    public function setNombre(string $Nombre): self
+    {
+        $this->Nombre = $Nombre;
 
         return $this;
     }

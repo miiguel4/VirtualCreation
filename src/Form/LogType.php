@@ -15,6 +15,7 @@ class LogType extends AbstractType
             ->add('Accion')
             ->add('Fecha')
             ->add('usuario')
+            ->add('Nombre')
         ;
     }
 
