@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resetear contraseña{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('assets/css/registrarse.css') }}">
+     <section class="h-100 h-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3" id="borde">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;">
+                        <div class="card-body p-4 p-md-5" id="contenedor">
+                            <h3 id="titulo">Restablecer su contraseña</h3>
+                             {{ form_start(requestForm) }}
+                                <div class="form-outline mb-4">
+                                    {{ form_row(requestForm.email) }}
+                                </div>
+                                <button class="btn btn-primary">Enviar correo electrónico de restablecimiento de contraseña</button>
+                                <div class="my-custom-class-for-errors">
+                            {{ form_end(requestForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

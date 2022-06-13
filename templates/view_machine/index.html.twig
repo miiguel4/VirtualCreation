@@ -128,7 +128,13 @@
     <div class="b-example-divider"></div>
       <div class="mb-3" id="vm">
         <h3>Máquinas Virtuales</h3>
-        {% if maquina is empty %}
+        {# {% for dato in datos|keys %}
+							{% for item in datos %}
+
+                {{dump(item.estado)}}
+                {% endfor %}
+          {% endfor %} #}
+        {% if datos is empty %}
           <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
         {% else %}
             <form  method="post">
@@ -144,7 +150,7 @@
                     <button type="submit" class="btn btn-primary btn-sm" name="descargar">Descargar Credenciales</button>
                 </ul>
               </div>
-              {% if maquina is defined and lg is defined%}
+              {% if datos is defined and lg is defined%}
                 <table class="table table-light table-bordered">
                       <thead class="table-warning">
                           <tr>
@@ -157,26 +163,25 @@
                           </tr>
                         </thead>
                       <tbody>
-                {% for m in maquina %}
-                {% if (m is empty) or (lg is empty) %}
-                    <input type="hidden">
-                {% else %}
-                      <tr>
-                        <th scope="row">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="checkbox[]" value={{ m }}>
-                            <label class="form-check-label" for="flexCheckDefault">
-                              {{ m [3:-lg] }}
-                            </label>
-                          </div>
-                        </th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                      </tr>
-                {% endif %}
+                {% for dato in datos|keys %}
+                    {% for item in datos %}
+                          <tr>
+                            <th scope="row">
+                              <div class="form-check">
+                                {# <input class="form-check-input" type="checkbox" name="checkbox[]" value={{ item.name }}> #}
+                                <label class="form-check-label" for="flexCheckDefault">
+                                  {# {{ item.name [3:-lg] }} #}
+                                  {{dump(item.name)}}
+                                </label>
+                              </div>
+                            </th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                          </tr>
+                    {% endfor %}
                 {% endfor %}
                       </tbody>
                   </table>

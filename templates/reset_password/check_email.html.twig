@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Correo electrónico de restablecimiento de contraseña enviado{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('assets/css/registrarse.css') }}">
+     <section class="h-100 h-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3" id="borde">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;">
+                        <div class="card-body p-4 p-md-5" id="contenedor">
+                            <p> Si existe una cuenta que coincide con su correo electrónico, entonces se acaba de enviar un correo electrónico que contiene un enlace que puede usar para restablecer su contraseña.
+                                Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                            </p>
+                            <p>Si no recibe un correo electrónico, verifique su carpeta de correo no deseado o <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+                            <a id="volver" class="btn btn-primary" href="{{ path('app_inicio') }}" role="button">Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

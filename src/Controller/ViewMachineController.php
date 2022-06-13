@@ -28,33 +28,28 @@ class ViewMachineController extends AbstractController
         $nombremaquina = shell_exec("govc find vm -name *".$id."");
           
         if (empty($nombremaquina)) {
-            $maquinas = NULL;
+            $informacion = NULL;
             $longitud = NULL;
           
         } else {
-            $estado = array (
-                  'estado'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Power state'"))
+            $informacion = array (
+                0 => [
+                  'name'    => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Name:'")),
+                  'estado'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Power state'")),
+                  'sistema'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Guest name:'")),
+                  'memoria'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Memory:'")), 
+                  'CPU'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'CPU:'")), 
+                  'estado'  => explode("\n",  shell_exec(" govc vm.info *".$id." | grep 'Power state:'")),
+                ]
             );
-            $maquinas = explode("\n", $nombremaquina);
+
             $longitud = strlen($id)+1;
-
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT p
-                FROM App:Parametros p
-                WHERE p.Nombre LIKE :nombre'
-            )->setParameter('nombre', "WindowsServer2019_1");
-
-            $buscar = $query->getResult();
-            var_dump($buscar);
-            var_dump("_".$id);
         }
-       
+        
         return $this->render('view_machine/index.html.twig', [
             'controller_name' => 'ViewMachineController',
-            'maquina' =>  $maquinas,
             'lg'      =>  $longitud,
-            'estado'   => $estado,
+            'datos'   => $informacion,
         ]);
 
     }
