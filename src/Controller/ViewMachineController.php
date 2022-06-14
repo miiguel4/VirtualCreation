@@ -32,6 +32,9 @@ class ViewMachineController extends AbstractController
             $maquinas = NULL;
             $longitud = NULL;
         } else {
+           /*  $estado  = shell_exec("govc vm.info *".$id." | grep 'Power state:'");
+            $prueba = preg_split ("/\Name:/", $estado); */
+        
             $maquinas = explode("\n", $nombremaquina);
             $longitud = strlen($id)+1;
         }
