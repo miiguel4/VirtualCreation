@@ -60,10 +60,13 @@
                       Admin
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Usuarios</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_parametros_index') }}">Maquinas Virtuales</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_log_index') }}">Registro Log</a></li>
-                    <li><a class="dropdown-item" href="http://grafana:3000/">Grafana</a></li>
+                      <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Usuarios</a></li>
+                      <li><a class="dropdown-item" href="{{ path('app_parametros_index') }}">Maquinas Virtuales</a></li>
+                      <li><a class="dropdown-item" href="{{ path('app_log_index') }}">Registro Log</a></li>
+                      <li><a class="dropdown-item" href="http://grafana:3000/">Grafana</a></li>
+                      <li><a class="dropdown-item" href="https://exsi.mrpro.com/">EXSI</a></li>
+                      <li><a class="dropdown-item" href="https://correo.mrpro.com/">Correo</a></li>
+                      <li><a class="dropdown-item" href="http://grafana:9090/targets/">Prometheus</a></li>
                     </ul>
                   </div>
                 {% endif %}
@@ -128,13 +131,7 @@
     <div class="b-example-divider"></div>
       <div class="mb-3" id="vm">
         <h3>Máquinas Virtuales</h3>
-        {# {% for dato in datos|keys %}
-							{% for item in datos %}
-
-                {{dump(item.estado)}}
-                {% endfor %}
-          {% endfor %} #}
-        {% if datos is empty %}
+         {% if maquina is empty %}
           <h6>  <small class="text-muted">Ningún Recurso Creado</small> </h6>
         {% else %}
             <form  method="post">
@@ -150,38 +147,30 @@
                     <button type="submit" class="btn btn-primary btn-sm" name="descargar">Descargar Credenciales</button>
                 </ul>
               </div>
-              {% if datos is defined and lg is defined%}
+              {% if maquina is defined and lg is defined%}
                 <table class="table table-light table-bordered">
                       <thead class="table-warning">
                           <tr>
                             <th scope="col">Máquina Virtual</th>
-                            <th scope="col">Espacio Utilizado</th>
-                            <th scope="col">Sistema Operativo Invitado </th>
-                            <th scope="col">Nombre del Host </th>
-                            <th scope="col">CPU de Host </th>
-                            <th scope="col">Memoria de Host </th>
+                            <th scope="col">Estado</th>
                           </tr>
                         </thead>
                       <tbody>
-                {% for dato in datos|keys %}
-                    {% for item in datos %}
-                          <tr>
-                            <th scope="row">
-                              <div class="form-check">
-                                {# <input class="form-check-input" type="checkbox" name="checkbox[]" value={{ item.name }}> #}
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  {# {{ item.name [3:-lg] }} #}
-                                  {{dump(item.name)}}
-                                </label>
-                              </div>
-                            </th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                          </tr>
-                    {% endfor %}
+                {% for m in maquina %}
+                {% if (m is empty) or (lg is empty) %}
+                    <input type="hidden">
+                {% else %}
+                  <tr>
+                        <th scope="row">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkbox[]" value={{ m }}>
+                            <label class="form-check-label" for="flexCheckDefault">
+                              {{ m [3:-lg] }}
+                            </label>
+                          </div>
+                        </th>
+                        <td>Mark</td>
+                {% endif %}
                 {% endfor %}
                       </tbody>
                   </table>
